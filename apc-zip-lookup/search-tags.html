@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Zip lookup Test</title>
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<link href='jquery-ui.min.css' rel='stylesheet' type='text/css'>
+<style>
+	body {
+		font-family:'Doris', sans-serif;
+		margin:0;
+		padding:0;
+	}
+	#body-wrapper {
+		background:url('usa.png') no-repeat center 0 fixed;
+		background-size:705px 475px;
+		margin:0 auto;
+		min-height:475px;
+		width:705px;
+	}
+	
+	#lookup-wrapper {
+		background-color:rgba( 256,256,256, 0.8 );
+		border-radius:6px;
+		margin:0 auto;
+		padding: 20px 0;
+		position:relative;
+		text-align:center;
+		top:150px;
+		width:80%;
+	}
+	
+	#zip-lookup {
+		border-radius: 5px;
+		padding:5px;
+	}
+	#message {
+		border-radius: 5px;
+		padding:5px;
+	}
+	
+	#valid {
+		bottom:0;
+		color:#666;
+		padding:10px;
+		position:absolute;
+	}
+</style>
+<script src="external/jquery/jquery.js"></script>
+<script src="jquery-ui.min.js"></script>
+</head>
+<body>
+<div id='body-wrapper'>
+	<div id="lookup-wrapper">
+		<label for="zip-lookup">Enter your zipcode:</label>
+		<input type="text" name="input" id="zip-lookup"  placeholder="Zip" maxlength="5" />
+	<div id="message"></div>
+	</div>
+</div>
+<div id="valid">Valid Zips: 04774, 04781, 04739</div>
+<script>
+	var zipList = [ '04774', '04781', '04739' ];
+	var message = {
+		searching: 'Looking up your zip',
+		found: 'You are able to host!',
+		notfound: 'Sorry, we currently do not serve your area.'
+	};
+	
+	jQuery( document ).ready( function() {
+		jQuery( "#zip-lookup" ).on( 'input', function(e) {
+			var val = e.currentTarget.value;
+			var found = false;
+			
+			if( val.split( '' ).length >= 5 ) {
+				jQuery( "#message" ).text( message.searching );
+				jQuery( zipList ).each( function( k,v ) { if( val === v ) { found = true; } });
+				
+				setTimeout( function()  { // set a delay for the sake of the demo
+					if( found ) {
+						jQuery( "#message" ).text( message.found );
+					} else {
+						jQuery( "#message" ).text( message.notfound );
+					}
+				}, 1000);
+			}
+		});
+	});
+	
+</script>
+</body>
+</html>
