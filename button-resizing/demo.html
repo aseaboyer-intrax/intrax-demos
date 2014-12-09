@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Square/Circle placement</title>
+<style>
+	body { margin:0;padding:40px;}
+	
+	div>p, div>h2 {
+		text-align:right;
+	}
+	
+	.test1 {
+		background-color:#ccc;
+		border:20px solid #fff;
+		padding:0;
+		transition:border 250ms,padding 250ms;
+		width:400px;
+	}
+	.test1:hover {
+		border:0 solid #fff;
+		padding:20px;
+	}
+	
+	.test2 {
+		background-color:#ccc;
+		left:40px;
+		padding:20px;
+		position: absolute;
+		top:220px;
+		transition:padding 250ms, left 250ms, top 250ms;
+		width:400px;
+	}
+	.test2:hover {
+		left:20px;
+		top:200px;
+		padding:40px;
+	}
+	
+</style>
+</head>
+<body>
+
+<div class='test1'>
+<h2>Test Title</h2>
+<p>Just so dummy text to play with</p>
+</div>
+
+<div class='test2'>
+<h2>Test Title</h2>
+<p>Just so dummy text to play with</p>
+</div>
+
+</body>
+</html>
