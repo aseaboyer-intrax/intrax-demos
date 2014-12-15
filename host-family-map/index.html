@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>APC Host Family HeatMap</title>
+<style>
+	body { margin:0;padding:0;}
+	#canvas {
+		background-color:#ccc;
+	}
+	
+	@font-face { font-family: 'milocomp'; src: url('fonts/MiloWeb.eot'); src: url('fonts/MiloWeb.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb.woff') format('woff'), url('fonts/MiloComp.ttf') format('truetype'), url('fonts/MiloComp.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
+	
+	@font-face { font-family: 'milobold'; src: url('fonts/MiloWeb-Bold.eot'); src: url('fonts/MiloWeb-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb-Bold.woff') format('woff'), url('fonts/MiloComp-Bold.ttf') format('truetype'), url('fonts/MiloComp-Bold.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
+</style>
+</head>
+<body>
+
+<canvas id="canvas" width="1200" height="600" />
+
+<script>
+	var canv = document.getElementById( "canvas" );
+	var c    = canv.getContext( "2d" );
+	var mapImg = new Image();
+	mapImg.src = 'mockup_HF_map.png';
+	
+	/*
+	canv.addEventListener( 'mousedown', function( e ) {
+		console.log( e.x + " - " + e.y );
+		drawCircle(c, e.x, e.y, 20 );
+	}, false);
+	*/
+	
+	function drawCircle( ctx, centerX, centerY, radius, lineWidth ) { // bind this to the context so we can do the following: c.drawCircle( x, y, r );
+		var und;
+		
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+		
+		ctx.fillStyle = 'rgba( 25, 190, 234, 0.4 )';
+		ctx.strokeStyle = 'rgba( 25, 190, 234, 0.7 )';
+		
+		ctx.fill();
+		
+		if ( lineWidth != und && lineWidth > 0 ) {
+			ctx.lineWidth = lineWidth;
+			ctx.stroke();
+		}
+		
+	}
+	
+	function State( n, c, x, y ) {
+		return {
+			'name':n,
+			'count':c,
+			'x':x,
+			'y':y
+		}
+	}
+	
+	var maxTime = 500; // ms
+	var baseTime = 0;
+	
+	var states = [
+		new State( 'Alabama', 12, 756, 395 ),
+		new State( 'Alaska', 0, 0, 0 ),
+		new State( 'Arizona', 24, 448, 389 ),
+		new State( 'Arkansas', 0, 696, 380 ),
+		new State( 'California', 929, 350, 330 ),
+		new State( 'Colorado', 6, 528, 312 ),
+		new State( 'Connecticut', 108, 910, 222 ),
+		new State( 'Delaware', 1, 915, 226 ),
+		new State( 'District of Columbia', 54, 879, 272 ),
+		new State( 'Florida', 109, 830, 457 ),
+		new State( 'Georgia', 78, 784, 382 ),
+		new State( 'Hawaii', 0, 0, 0 ),
+		new State( 'Idaho', 0, 403, 207 ),
+		new State( 'Illinois', 190, 714, 253 ),
+		new State( 'Indiana', 13, 746, 263 ),
+		new State( 'Iowa', 9, 639, 257 ),
+		new State( 'Kansas', 13, 624, 326 ),
+		new State( 'Kentucky', 8, 773, 317 ),
+		new State( 'Luisiana', 0, 695, 428 ),
+		new State( 'Maine', 0, 925, 155 ),
+		new State( 'Maryland', 163, 860, 270 ),
+		new State( 'Massachusetts', 176, 914, 210 ),
+		new State( 'Michigan', 60, 765, 226 ),
+		new State( 'Minnesota', 61, 648, 194 ),
+		new State( 'Mississippi', 0, 726, 410 ),
+		new State( 'Missouri', 18, 686, 336 ),
+		new State( 'Montana', 0, 466, 156 ),
+		new State( 'Nebraska', 0, 583, 270 ),
+		new State( 'Nevada', 7, 382, 280 ),
+		new State( 'New Hampshire', 5, 916, 181 ),
+		new State( 'New Jersey', 379, 882, 252 ),
+		new State( 'New Mexico', 0, 490, 375 ),
+		new State( 'New York', 506, 871, 221 ),
+		new State( 'North Carolina', 148, 849, 345 ),
+		new State( 'North Dakota', 0, 588, 151 ),
+		new State( 'Ohio', 52, 775, 258 ),
+		new State( 'Oklahoma', 0, 620, 372 ),
+		new State( 'Oregon', 28, 320, 200 ),
+		new State( 'Pennsylvania', 144, 823, 257 ),
+		new State( 'Rhode Island', 3, 910, 220 ),
+		new State( 'South Carolina', 30, 831, 386 ),
+		new State( 'South Dakota', 0, 584, 203 ),
+		new State( 'Tennessee', 27, 762, 347 ),
+		new State( 'Texas', 127, 604, 439 ),
+		new State( 'Utah', 0, 459, 291 ),
+		new State( 'Vermont', 0, 901, 175 ),
+		new State( 'Virginia', 289, 849, 306 ),
+		new State( 'Washington', 194, 350, 120 ),
+		new State( 'West Virginia', 1, 812, 301 ),
+		new State( 'Wisconsin', 25, 687, 218 ),
+		new State( 'Wyoming', 0, 501, 210 ),
+	];
+	
+	mapImg.onload = function() {
+		
+		// assign randomized properties
+		for( x = 0; x < states.length; x++ ) {
+			var s = states[ x ];
+			s.startTime = Math.random() * maxTime;
+			s.currentSize = Math.floor( ( Math.random() * 10 ) + 1 );
+			s.growSpeed = ( s.count * 0.01 ) + 1;
+			s.finished = false;
+		}
+		
+		baseTime = new Date().getTime();
+		animate();
+	};
+	
+	function animate() {
+		var thisTime = new Date().getTime();
+		var timeDiff = thisTime - baseTime;
+		
+		// Start the update loop
+		c.drawImage( mapImg, 0,0, canv.width,canv.height );
+		c.font = "18px milobold";
+		c.textAlign = 'center';
+		console.log( timeDiff );
+		var numLeft = 0;
+		for( x = 0; x < states.length; x++ ) {
+			var s = states[ x ];
+			s.currentSize += ( s.growSpeed + ( ( s.currentSize + timeDiff ) * 0.01) );
+			if( s.currentSize >= s.count ) {
+				s.currentSize = s.count;
+				states[ x ].finished = true;
+			} else {
+				numLeft++;
+			}
+			var drawCount = s.currentSize / 10;
+			
+			if( drawCount > 1 ) {
+				drawCircle(c, s.x, s.y, drawCount, ( s.currentSize / s.count  * 2) );
+				
+				if( drawCount > 10 ) {
+					c.strokeStyle = '#ffffff';
+					c.lineWidth = 3;
+					c.fillStyle = 'rgba( 25, 190, 234, 1 )';
+					c.strokeText( s.count, s.x, (s.y + 6) );
+					c.fillText( s.count, s.x, (s.y + 6) );
+				}
+			}
+		}
+		
+		if( numLeft > 0 ) {
+			//console.log( 'Still animating: ' + numLeft );
+			requestAnimationFrame( animate );
+		}
+	}
+	
+</script>
+
+</body>
+</html>
