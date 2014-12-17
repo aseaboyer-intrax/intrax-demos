@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>APC Host Family HeatMap</title>
+<style>
+	body { margin:0;padding:0;}
+	#canvas {
+		background-color:#ccc;
+		width:100%;
+	}
+	
+	@font-face { font-family: 'milocomp'; src: url('fonts/MiloWeb.eot'); src: url('fonts/MiloWeb.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb.woff') format('woff'), url('fonts/MiloComp.ttf') format('truetype'), url('fonts/MiloComp.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
+	
+	@font-face { font-family: 'milobold'; src: url('fonts/MiloWeb-Bold.eot'); src: url('fonts/MiloWeb-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb-Bold.woff') format('woff'), url('fonts/MiloComp-Bold.ttf') format('truetype'), url('fonts/MiloComp-Bold.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
+</style>
+</head>
+<body>
+
+<canvas id="canvas" width="1200" height="600" />
+
+<script>
+	var canv = document.getElementById( "canvas" );
+	var c    = canv.getContext( "2d" );
+	var mapImg = new Image();
+	mapImg.src = 'mockup_HF_map_statelines.png';
+	
+	canv.addEventListener( 'mousemove', function( e ) {
+		var offSize = canvas.width / window.innerWidth;
+		//offSize = 1;
+		automation.defaultSize.offSize = offSize;
+		automation.mouse.x = offSize * e.x; // update mouse location
+		automation.mouse.y = offSize * e.y; // respects resize value
+		
+		// delay animation
+		
+	}, false);
+	
+	
+	function drawCircle( ctx, centerX, centerY, radius, lineWidth, fill ) { // bind this to the context so we can do the following: c.drawCircle( x, y, r );
+		var und;
+		
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+		
+		ctx.fillStyle = fill;
+		ctx.strokeStyle = fill;
+		
+		ctx.fill();
+		
+		if ( lineWidth != und && lineWidth > 0 ) {
+			ctx.lineWidth = lineWidth;
+			ctx.stroke();
+		}
+		
+	}
+	
+	function Testimonial( n, x, y, t, newImage, options ) {
+		var und;
+		var displayAbove = false;
+		if( options.strength == und ) {
+			options.strength = 70;
+		}
+		if( options.screenHeight != und && x >= ( options.screenHeight * 0.5 ) ) {
+			displayAbove = true;
+		}
+		
+		var img = document.createElement('IMG');
+		img.src = newImage;
+		
+		return {
+			'name': n,
+			'text': t,
+			'x': x,
+			'y': y,
+			'strength': options.strength,
+			'displayAbove':displayAbove,
+			'img':img,
+			active: false,
+			draw: function( context ) {
+				var useColor = "rgba( 128, 34, 187, 0.1)";
+				if( this.active ) { 
+					useColor = "rgba( 128, 34, 187, 0.5)";
+				}
+				drawCircle( c, this.x, this.y, this.strength, 0, useColor );
+			}
+		}
+	}
+	
+	var automation = {
+		changeFrequency: 3000, //ms
+		nextChange: 0,
+		currentNumber: 0,
+		updateNextChange: function () {
+			this.nextChange = new Date().getTime() + this.changeFrequency;
+		},
+		defaultSize: {
+			x:1200,
+			y:600,
+		},
+		margins: 20,
+		tailSize: {
+			x: 40,
+			y: 40,
+		},
+		imageSize: 100,
+		mouse: {
+			x:0,
+			y:0,
+		},
+		displayNumber: function ( num ) {
+			this.currentNumber = num;
+			this.updateNextChange();
+		},
+		update: function ( t ) {
+			
+			if( this.nextChange == 0 ) {
+				this.updateNextChange();
+			}
+			
+			var currentTime = new Date().getTime();
+			if( currentTime >= this.nextChange ) {
+				this.currentNumber++;
+				this.updateNextChange();
+			}
+			
+			if( this.currentNumber >= t.length ) {
+				this.currentNumber = 0;
+			}
+			
+			
+			if( !t[ this.currentNumber ].active ) {
+				for( x = 0; x < t.length; x++ ) {
+					t[ x ].active = false;
+				}
+				t[ this.currentNumber ].active = true;
+			}
+			
+		//	console.log( "currentNumber: " + this.currentNumber + " nextChange: " + this.nextChange );
+		},
+		draw: function ( ctx, t, bubbleSize ) {
+			// draw the bubble
+			ctx.fillStyle = 'rgba( 200, 90, 90, 0.6 )';
+			ctx.beginPath();
+			if( t.displayAbove ) {
+				ctx.lineTo( this.margins, this.margins ); // start in corner
+				ctx.lineTo( this.defaultSize.x - this.margins, this.margins );
+				ctx.lineTo( this.defaultSize.x - this.margins, bubbleSize );
+				ctx.lineTo( t.x, bubbleSize );
+				ctx.lineTo( t.x, this.tailSize.y + this.margins + bubbleSize );
+				ctx.lineTo( t.x - ( this.tailSize.x ), bubbleSize );
+				ctx.lineTo( this.margins, bubbleSize ); // end
+			} else {
+				ctx.lineTo( this.margins, this.defaultSize.y - this.margins ); // start
+				ctx.lineTo( this.defaultSize.x - this.margins, this.defaultSize.y - this.margins );
+				ctx.lineTo( this.defaultSize.x - this.margins, this.defaultSize.y - this.margins - bubbleSize );
+				ctx.lineTo( t.x - ( this.tailSize.x ), this.defaultSize.y - this.margins - bubbleSize );
+				ctx.lineTo( t.x, this.defaultSize.y - this.margins - bubbleSize - this.tailSize.y ); // start
+				ctx.lineTo( t.x, this.defaultSize.y - this.margins - bubbleSize );
+				ctx.lineTo( this.margins, this.defaultSize.y - this.margins - bubbleSize ); // end
+			}
+			ctx.closePath();
+			ctx.fill();
+			
+			// draw the image - It's probably better to make a tool tip in HTML instead!
+			ctx.save();
+			ctx.beginPath();
+			var imageSize = ( bubbleSize - (this.margins + this.margins) ) * 0.5 ;
+			var imgPosBase = ( this.margins  ) + ( (bubbleSize - this.margins) * 0.5 );
+			if( t.displayAbove ) {
+				ctx.arc( imgPosBase, imgPosBase, imageSize, 0, Math.PI * 2, false);
+				ctx.drawImage(t.img, imgPosBase, imgPosBase);
+			} else {
+				ctx.arc( imgPosBase, this.defaultSize.y - imgPosBase, imageSize, 0, Math.PI * 2, false);
+				ctx.drawImage(t.img, 0, 0);
+			}
+			ctx.clip(); // Clip to the current path
+			ctx.restore();
+		},
+	};
+	
+	var palette = {
+		getRandom: function( alpha ) {
+			var numColors = this.colors.length;
+			return "rgba(" + this.colors[ (Math.floor( ( Math.random() * numColors ) ) ) ] + ', ' + alpha + " )";
+			
+		},
+		colors: [
+			"54, 51,119 ",
+			"130,127,178 ",
+			"88, 85,148 ",
+			"29, 25, 89 ",
+			"11,  8, 59 ",
+
+			"155, 52, 78 ",
+			"233,155,175 ",
+			"194, 97,121 ",
+			"116, 19, 44 ",
+			"78,  0, 19 ",
+
+			"89,149, 50 ",
+		//	"179,224,149 ",
+			"130,187, 93 ",
+			"55,112, 19 ",
+			"29, 75,  0 "
+		],
+	};
+	
+	var testimonials = [
+		new Testimonial( 'Franziska, Germany and Texas', 300, 200,
+			"Every time I hear someone talking in English next to me I start thinking in English, too.",
+			"http://i.imgur.com/gwlPu.jpg",
+			{'strength': 70, 'screenHeight': automation.defaultSize.x} ),
+		new Testimonial( 'Anna-Lena, Sweden and Pennsylvania', 600, 400,
+			"The best thing about my years in America is that I gained a new family, my American family as I call them :)",
+			"http://i.imgur.com/gwlPu.jpg",
+			{'strength': 70, 'screenHeight': automation.defaultSize.x} ),
+		new Testimonial( 'Yukiyo, Japan and Oregon', 800, 290,
+			"The most precious thing is that I've made life-long friends during the program and we are still keeping touch.",
+			"http://i.imgur.com/gwlPu.jpg",
+			{'strength': 70, 'screenHeight': automation.defaultSize.x} ),
+		new Testimonial( 'Jessica, Brazil and New York', 500, 310,
+			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
+			"http://i.imgur.com/gwlPu.jpg",
+			{'strength': 70, 'screenHeight': automation.defaultSize.x} ),
+	];
+	
+	mapImg.onload = function() {
+		/*
+		// assign randomized properties
+		for( x = 0; x < testimonials.length; x++ ) {
+		
+		}
+		*/
+		
+		baseTime = new Date().getTime();
+		
+		automation.updateNextChange();
+		
+		animate();
+	};
+	
+	function distance( v1, v2 ) {
+		return Math.sqrt( Math.pow( (v1.x - v2.x), 2) + Math.pow( (v1.y - v2.y), 2) );
+	}
+	
+	function animate() {
+		var thisTime = new Date().getTime();
+		var timeDiff = thisTime - baseTime;
+		
+		/*
+		 *	*** UPDATE ***
+		 */
+		c.drawImage( mapImg, 0,0, canv.width,canv.height ); //draw map
+		
+		for( x = 0; x < testimonials.length; x++ ) {
+			var t = testimonials[x];
+		
+			var dist = distance( automation.mouse, t );	// get proximity to this map point
+			if( dist <= t.strength ) { automation.displayNumber(x); }
+		}
+		
+		automation.update( testimonials );
+		
+		/*
+		 *	*** DRAW ***
+		 */
+		c.font = "" + ( 18 * automation.defaultSize.offSize ) + "px milobold";
+		c.textAlign = 'center';
+		
+		var activeT = 0;
+		for( x = 0; x < testimonials.length; x++ ) { // draw testimonials
+			var t = testimonials[ x ];
+			t.draw( c );
+			if( t.active ) {
+				activeT = x;
+			}
+		}
+		
+		automation.draw( c, testimonials[ activeT ], 150 );
+		
+		
+		requestAnimationFrame( animate );
+	}
+	
+</script>
+
+</body>
+</html>
