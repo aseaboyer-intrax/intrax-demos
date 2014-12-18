@@ -101,7 +101,6 @@
 		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
 		
 		ctx.fillStyle = fill;
-		ctx.strokeStyle = fill;
 		
 		ctx.fill();
 		
@@ -116,9 +115,6 @@
 		var und;
 		var displayAbove = false;
 		var displayRight = true;
-		if( options.strength == und ) {
-			options.strength = 70;
-		}
 		if( options.screenHeight != und && x >= ( options.screenHeight * 0.5 ) ) {
 			displayAbove = true;
 		}
@@ -128,17 +124,25 @@
 			'text': t,
 			'x': x,
 			'y': y,
-			'strength': options.strength,
+			'inactiveDisplay': 20,
+			'activeDisplay': 30,
+			'strength': 20,
+			'circleDiff': 0.9,
 			'displayAbove':displayAbove,
 			'displayRight':displayRight,
 			'img':newImage,
 			active: false,
 			draw: function( context ) {
-				var useColor = "rgba( 193, 229, 130, 0.4)";
-				if( this.active ) { 
-					useColor = "rgba( 193, 229, 130, 0.7)";
+				c.fillStyle = "#ffffff";
+				c.strokeStyle = "#666666";
+				if( this.active ) {
+					drawCircle( c, this.x, this.y, this.activeDisplay, 1, "#ffffff" );
+					drawCircle( c, this.x, this.y, (this.activeDisplay * this.circleDiff), 1, "rgba( 193, 229, 130, 1)" );
+				} else {
+					drawCircle( c, this.x, this.y, this.inactiveDisplay, 1, "#ffffff" );
+					drawCircle( c, this.x, this.y, (this.inactiveDisplay * this.circleDiff), 1, "rgba( 193, 229, 130, 1)" );
 				}
-				drawCircle( c, this.x, this.y, this.strength, 0, useColor );
+				
 			}
 		}
 	}
@@ -250,23 +254,23 @@
 		new Testimonial( 'Franziska, Germany and Texas', 300, 200,
 			"Every time I hear someone talking in English next to me I start thinking in English, too.",
 			"images/jpeg.jpg",
-			{'strength': 50, 'screenHeight': automation.defaultSize.x} ),
+			{'screenHeight': automation.defaultSize.x} ),
 		new Testimonial( 'Anna-Lena, Sweden and Pennsylvania', 600, 400,
 			"The best thing about my years in America is that I gained a new family, my American family as I call them :)",
 			"images/test.jpg",
-			{'strength': 50, 'screenHeight': automation.defaultSize.x} ),
+			{'screenHeight': automation.defaultSize.x} ),
 		new Testimonial( 'Yukiyo, Japan and Oregon', 800, 290,
 			"The most precious thing is that I've made life-long friends during the program and we are still keeping touch.",
 			"images/smallsize-meet-our-aupair.jpg",
-			{'strength': 50, 'screenHeight': automation.defaultSize.x} ),
+			{'screenHeight': automation.defaultSize.x} ),
 		new Testimonial( 'Jessica, Brazil and New York', 500, 310,
 			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
 			"images/photo-2211482-med.jpg",
-			{'strength': 50, 'screenHeight': automation.defaultSize.x} ),
+			{'screenHeight': automation.defaultSize.x} ),
 		new Testimonial( 'Erica, Portland and San Francisco', 330, 350,
 			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
 			"images/3ed70ce.jpg",
-			{'strength': 50, 'screenHeight': automation.defaultSize.x} ),
+			{'screenHeight': automation.defaultSize.x} ),
 	];
 	
 	mapImg.onload = function() {
@@ -305,8 +309,6 @@
 		/*
 		 *	*** DRAW ***
 		 */
-		c.font = "" + ( 18 * automation.defaultSize.offSize ) + "px milobold";
-		c.textAlign = 'center';
 		
 		var activeT = 0;
 		for( x = 0; x < testimonials.length; x++ ) { // draw testimonials
