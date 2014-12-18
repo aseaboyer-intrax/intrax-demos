@@ -22,9 +22,21 @@
 		right:50px;
 		top:200px;
 		width:250px;
+		
 		-moz-user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;
+		
+		display:-ms-flex;
+		display:-webkit-flex;
+		display:flex;
+		-ms-flex-direction:row;
+		-webkit-flex-direction:row;
+		flex-direction:row;
+		-ms-flex-wrap:wrap;
+		-webkit-flex-wrap:wrap;
+		flex-wrap:wrap;
+		justify-content:space-between;
 	}
 	
 	.map-testimonial-image {
@@ -33,6 +45,21 @@
 		height:150px;
 		margin:0 auto;
 		width:150px;
+	}
+	
+	
+	@media (max-width:800px) {
+		#canvasTooltip {
+			top:100%;
+			width:100%;
+		}
+		#canvasTooltip>div {
+			width:45%;
+			max-width:150px;
+		}
+		.map-testimonial-image {
+			width:45%;
+		}
 	}
 	
 	@font-face { font-family: 'milocomp'; src: url('fonts/MiloWeb.eot'); src: url('fonts/MiloWeb.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb.woff') format('woff'), url('fonts/MiloComp.ttf') format('truetype'), url('fonts/MiloComp.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
@@ -146,8 +173,8 @@
 			*/
 			
 			var writeText  = "<img src='" + t.img + "' class='map-testimonial-image' />";
-				writeText += '<p><i>"' + t.text + '"</i></p>';
-				writeText += "<p><strong>" + t.name + "</strong></p>";
+				writeText += '<div class="map-text"><p><i>"' + t.text + '"</i></p>';
+				writeText += "<p><strong>" + t.name + "</strong></p></div>";
 			this.toolTip.innerHTML = writeText;
 		},
 		update: function ( t ) {
