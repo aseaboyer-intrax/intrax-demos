@@ -9,18 +9,20 @@
 	
 	#canvasWrapper {
 		position:relative;
+		margin: 0 auto;
+		max-width: 1000px;
 	}
 	
 	#canvas {
-		background-color:#ccc;
-		width:100%;
+		background-color:#fff;
+		width:70%;
 	}
 	
 	#canvasTooltip {
 		border-bottom:2px solid #666;
 		position:absolute;
 		right:50px;
-		top:200px;
+		top:40px;
 		width:250px;
 		
 		-moz-user-select: none;
@@ -49,17 +51,22 @@
 	
 	
 	@media (max-width:800px) {
-		#canvasTooltip {
-			border-width:0;
-			top:100%;
+		#canvas {
 			width:100%;
 		}
-		#canvasTooltip>div {
-			width:45%;
-			max-width:150px;
+		
+		#canvasTooltip {
+			border-width:0;
+			left:5%;
+			top:100%;
+			width:90%;
 		}
-		.map-testimonial-image {
-			width:45%;
+		#canvasTooltip>img {
+			margin:0;
+			max-width:30;
+		}
+		#canvasTooltip>div {
+			width:60%;
 		}
 	}
 	
@@ -71,23 +78,25 @@
 <body>
 
 <div id="canvasWrapper">
-	<canvas id="canvas" width="1200" height="600"></canvas>
+	<canvas id="canvas" width="800" height="500"></canvas>
 	<div id="canvasTooltip">test</div>
 </div>
 
 <script src="jquery-2.1.1.min.js"></script>
 <script>
 	var canv = document.getElementById( "canvas" );
+	var canv = document.getElementById( "canvas" );
 	var c    = canv.getContext( "2d" );
 	var mapImg = new Image();
-	mapImg.src = 'mockup_HF_map_statelines.png';
+	mapImg.src = 'mockup_HF_map_statelines-cropped_v3.png';
 	
 	canv.addEventListener( 'mousemove', function( e ) {
-		var offSize = canvas.width / window.innerWidth;
-		//offSize = 1;
+		var offSize = 1;
+		offSize = canvas.width / parseInt( jQuery( canvas ).css( 'width' ) );
+		//console.log( offSize+" = "+canvas.width + " / " + jQuery( canvas ).css( 'width' )  );
 		automation.defaultSize.offSize = offSize;
-		automation.mouse.x = offSize * e.x; // update mouse location
-		automation.mouse.y = offSize * e.y; // respects resize value
+		automation.mouse.x = (offSize * e.x) - jQuery( canvas ).offset().left; // update mouse location
+		automation.mouse.y = offSize * e.y - jQuery( canvas ).offset().top; // respects resize value
 		
 		// delay animation
 		
@@ -106,9 +115,9 @@
 			'text': t,
 			'x': x,
 			'y': y,
-			'inactiveDisplay': 10,
-			'activeDisplay': 15,
-			'strength': 15,
+			'inactiveDisplay': 25,
+			'activeDisplay': 40,
+			'strength': 25,
 			'circleDiff': 0.8,
 			'displayAbove':displayAbove,
 			'displayRight':displayRight,
@@ -124,16 +133,16 @@
 						this.x, this.y, this.activeDisplay );
 					
 					// Add colors
-					grd.addColorStop( 0.000, 'rgb( 241, 62, 12 )' );
-					grd.addColorStop( 1.000, 'rgb( 241, 62, 12 )' );
+					grd.addColorStop( 0.000, 'rgba( 241, 62, 12, 0.8 )' );
+					grd.addColorStop( 1.000, 'rgba( 241, 62, 12, 0.8 )' );
 				} else {
 					context.arc( this.x, this.y, this.inactiveDisplay, 0, 2 * Math.PI, false );
 					grd = context.createRadialGradient( this.x, this.y, 0.000, 
 						this.x, this.y, this.inactiveDisplay );
 					
 					// Add colors
-					grd.addColorStop( 0.000, 'rgb( 110, 139, 42 )' );
-					grd.addColorStop( 1.000, 'rgb( 110, 139, 42 )' );
+					grd.addColorStop( 0.000, 'rgba( 126, 170, 0, 0.8 )' );
+					grd.addColorStop( 1.000, 'rgba( 126, 170, 0, 0.8 )' );
 				}
 				
 				context.closePath();
@@ -203,45 +212,37 @@
 	};
 	
 	var testimonials = [
-		new Testimonial( 'Franziska, Germany and Texas', 300, 200,
-			"Every time I hear someone talking in English next to me I start thinking in English, too.",
+		new Testimonial( 'Lori, Host Mom from New York', 660, 140,
+			"I am a truly blessed Host Mom. My au pair is had a tremendous effect in my son’s life and our home. I know when I am at work, he is safe and cared for.",
 			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Anna-Lena, Sweden and Pennsylvania', 600, 400,
-			"The best thing about my years in America is that I gained a new family, my American family as I call them :)",
-			"images/test.jpg",
-			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Yukiyo, Japan and Oregon', 800, 290,
-			"The most precious thing is that I've made life-long friends during the program and we are still keeping touch.",
-			"images/smallsize-meet-our-aupair.jpg",
-			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Jessica, Brazil and New York', 500, 310,
-			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
-			"images/photo-2211482-med.jpg",
-			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Erica, Portland and San Francisco', 330, 350,
-			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
-			"images/3ed70ce.jpg",
-			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Franziska, Germany and Texas', 840, 440,
-			"Every time I hear someone talking in English next to me I start thinking in English, too.",
+		new Testimonial( 'Zambruni Family – CA', 95, 220,
+			"Our family feels that we hit the jackpot when our au pair Mariana arrived and can’t imagine what our home would be like without her. The best way to describe what has happened since Mariana’s arrival is to say that we, quite unexpectedly, received not just a caregiver, but a new daughter.",
 			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Anna-Lena, Sweden and Pennsylvania', 880, 220,
-			"The best thing about my years in America is that I gained a new family, my American family as I call them :)",
-			"images/test.jpg",
+		new Testimonial( 'The Patterson Family - MD', 690, 155,
+			"Through this experience, we have gained extended family. We have built a positive relationship with our au pair who has proven to be a nurturing, loving, warm, compassionate, and understanding person.",
+			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Yukiyo, Japan and Oregon', 700, 190,
-			"The most precious thing is that I've made life-long friends during the program and we are still keeping touch.",
-			"images/smallsize-meet-our-aupair.jpg",
+		new Testimonial( 'The Hadley Family - Virginia', 640, 230,
+			"Within moments of meeting her, I have people asking me how they can get a childcare provider like her. I have had numerous conversations about the awesomeness of au pairs and the benefit they bring because of Marijana.",
+			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Jessica, Brazil and New York', 350, 120,
-			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
-			"images/photo-2211482-med.jpg",
+		new Testimonial( 'The Young Family - Minnesota', 440, 140,
+			"We decided to get an au pair to meet our daycare needs but soon realized it was so much more than that. My husband and I  both work full time and I have never had a doubt that they are safe, loved and cared for all of the time.",
+			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
-		new Testimonial( 'Erica, Portland and San Francisco', 740, 420,
-			"I was totally bitten by the travel bug, my ambitions are small I just want to travel around the world now!",
-			"images/3ed70ce.jpg",
+		new Testimonial( 'The Kruse Family - Colorado', 320, 230,
+			"The end of the work day used to feel like the beginning of an even more challenging “job.”... Now that time of day is actually fun! We have the time to talk more at the table, take a family walk after dinner, let the kids play in the bath for an extra few minutes, sing and dance while we brush teeth, tell jokes while we lay in bed with them. And we have all of this time because of our au pair Cata.",
+			"images/jpeg.jpg",
+			{'screenHeight': automation.defaultSize.x} ),
+		new Testimonial( 'The McAninch Family - North Carolina', 620, 280,
+			"We’ve tried other au pair programs before. We chose AuPairCare because of the reliable, consistent care and the outstanding support from our local Area Director for both us and our au pair.",
+			"images/jpeg.jpg",
+			{'screenHeight': automation.defaultSize.x} ),
+		new Testimonial( 'The Bradenburg Family - Georgia', 585, 330,
+			"We believe that a part of our family and our country will go home with our au pair Esena. We will always be bound by this shared experience and the love we all have for our kids.",
+			"images/jpeg.jpg",
 			{'screenHeight': automation.defaultSize.x} ),
 	];
 	
@@ -267,13 +268,17 @@
 		/*
 		 *	*** UPDATE ***
 		 */
-		c.drawImage( mapImg, 0, 0, canv.width,canv.height ); //draw map
+		c.drawImage( mapImg, 0, 0, canv.width, canv.height ); //draw map
 		
 		for( x = 0; x < testimonials.length; x++ ) {
 			var t = testimonials[x];
 		
 			var dist = distance( automation.mouse, t );	// get proximity to this map point
-			if( dist <= t.strength ) { automation.displayNumber( x, testimonials[ x ] ); }
+			//console.log( x + " dist " + dist );
+			if( dist <= t.strength ) {
+				automation.displayNumber( x, testimonials[ x ] );
+			//	console.log( "hovering over: " + t.name );
+			}
 		}
 		
 		automation.update( testimonials );
@@ -281,6 +286,14 @@
 		/*
 		 *	*** DRAW ***
 		 */
+		
+		/*	// debug mouse position
+		c.beginPath();
+		c.arc( automation.mouse.x, automation.mouse.y, 10, 0, 2 * Math.PI, false );
+		c.closePath();
+		c.fillStyle = "#791234";
+		c.fill();
+		*/
 		
 		var activeT = 0;
 		for( x = 0; x < testimonials.length; x++ ) { // draw testimonials
