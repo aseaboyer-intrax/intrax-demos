@@ -16,7 +16,7 @@ canv.addEventListener( 'mousemove', function( e ) {
 	
 }, false);
 canv.addEventListener( 'tap', function( e ) {
-	alert( e.type );
+	alert( "test: " + e.type );
 	document.body.style.background = "#666666";
 	automation.mobile = true
 }, false);
