@@ -15,6 +15,11 @@ canv.addEventListener( 'mousemove', function( e ) {
 	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
 	
 }, false);
+canv.addEventListener( 'click', function( e ) {
+	alert( e.type );
+	document.body.style.background = "#666666";
+	automation.mobile = true
+}, false);
 
 function Testimonial( n, x, y, t, newImage, options ) {
 	var und;
@@ -86,6 +91,7 @@ var automation = {
 	changeFrequency: 3000, //ms
 	nextChange: 0,
 	currentNumber: 0,
+	mobile: false,
 	updateNextChange: function () {
 		this.nextChange = new Date().getTime() + this.changeFrequency;
 	},
