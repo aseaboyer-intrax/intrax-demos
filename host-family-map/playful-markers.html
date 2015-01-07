@@ -118,8 +118,8 @@
 			'x': x,
 			'y': y,
 			'mouseDistance': 0,
-			'inactiveDisplay': 15,
-			'activeDisplay': 40,
+			'inactiveDisplay': 10,
+			'activeDisplay': 25,
 			'strength': 25,
 			'circleDiff': 0.8,
 			'displayAbove':displayAbove,
@@ -131,7 +131,7 @@
 				
 				var dotSize = canvas.width / this.mouseDistance * 2.1;
 				if( dotSize < this.inactiveDisplay ) {
-				//	dotSize = this.inactiveDisplay;
+					dotSize = this.inactiveDisplay;
 				} else if ( dotSize > this.activeDisplay ) {
 					dotSize = this.activeDisplay;
 				}
