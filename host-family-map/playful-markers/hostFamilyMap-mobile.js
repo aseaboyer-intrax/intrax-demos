@@ -14,8 +14,14 @@ canv.addEventListener( 'mousemove', function( e ) {
 	automation.mouse.x = offSize * (e.x - jQuery( canvas ).offset().left); // update mouse location
 	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
 	
-	// delay animation
+}, false);
+
+// check for mobile/touch case
+canv.addEventListener( 'touchstart', function( e ) {
+	document.body.style.background = "#990000"; // revolving test indicator
 	
+	
+	automation.mobile = true;
 }, false);
 
 function Testimonial( n, x, y, t, newImage, options ) {
@@ -44,10 +50,18 @@ function Testimonial( n, x, y, t, newImage, options ) {
 			var grd;
 			
 			var dotSize = canvas.width / this.mouseDistance * 2.1;
-			if( dotSize < this.inactiveDisplay ) {
-				dotSize = this.inactiveDisplay;
-			} else if ( dotSize > this.activeDisplay ) {
-				dotSize = this.activeDisplay;
+			if( !automation.mobile ) { 
+				if( dotSize < this.inactiveDisplay ) {
+					dotSize = this.inactiveDisplay;
+				} else if ( dotSize > this.activeDisplay ) {
+					dotSize = this.activeDisplay;
+				}
+			} else { // handle mobile case
+				if( this.active ) {
+					dotSize = this.activeDisplay;
+				} else {
+					dotSize = this.inactiveDisplay;
+				}
 			}
 			
 			context.beginPath();
@@ -88,6 +102,7 @@ var automation = {
 	changeFrequency: 3000, //ms
 	nextChange: 0,
 	currentNumber: 0,
+	mobile: false,
 	updateNextChange: function () {
 		this.nextChange = new Date().getTime() + this.changeFrequency;
 	},
