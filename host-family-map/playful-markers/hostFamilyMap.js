@@ -14,8 +14,6 @@ canv.addEventListener( 'mousemove', function( e ) {
 	automation.mouse.x = offSize * (e.x - jQuery( canvas ).offset().left); // update mouse location
 	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
 	
-	// delay animation
-	
 }, false);
 
 function Testimonial( n, x, y, t, newImage, options ) {
