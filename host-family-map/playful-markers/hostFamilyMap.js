@@ -1,22 +1,37 @@
-var canv = document.getElementById( "canvas" );
-var canv = document.getElementById( "canvas" );
-var c    = canv.getContext( "2d" );
+var canv;
+var c;
 var mapImg = new Image();
-mapImg.src = 'mockup_HF_map_statelines-cropped_v3.png';
-c.font = "18px milobold";
-c.textAlign = 'center';
-
-canv.addEventListener( 'mousemove', function( e ) {
-	var offSize = 1;
-	offSize = canvas.width / parseFloat( jQuery( canvas ).css( 'width' ) );
-	//console.log( offSize+" = "+canvas.width + " / " + jQuery( canvas ).css( 'width' )  );
-	automation.defaultSize.offSize = offSize;
-	automation.mouse.x = offSize * (e.x - jQuery( canvas ).offset().left); // update mouse location
-	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
+$( document ).ready(function() {
+	canv = document.getElementById( "canv" );
+	console.log( 'canv' );
+	console.log( canv );
+	c    = canv.getContext( "2d" );
+	mapImg.src = 'mockup_HF_map_statelines-cropped_v3.png';
+	//c.font = "18px milobold";
+	c.textAlign = 'center';
 	
-	// delay animation
+	mapImg.onload = function() {
+		baseTime = new Date().getTime();
+		
+		automation.toolTip = document.getElementById( 'canvasTooltip' );
+		automation.updateNextChange();
+		
+		automation.displayNumber( 0, testimonials[ 0 ] ); // start first
+		
+		animate();
+	};
 	
-}, false);
+	canv.addEventListener( 'mousemove', function( e ) {
+		var offSize = 1;
+		offSize = canv.width / parseFloat( jQuery( canv ).css( 'width' ) );
+		automation.defaultSize.offSize = offSize;
+		automation.mouse.x = offSize * (e.x - jQuery( canv ).offset().left); // update mouse location
+		automation.mouse.y = offSize * (e.y - jQuery( canv ).offset().top); // respects resize value
+		
+		// delay animation
+		
+	}, false);
+});
 
 function Testimonial( n, x, y, t, newImage, options ) {
 	var und;
@@ -43,7 +58,7 @@ function Testimonial( n, x, y, t, newImage, options ) {
 		draw: function( context ) {
 			var grd;
 			
-			var dotSize = canvas.width / this.mouseDistance * 2.1;
+			var dotSize = canv.width / this.mouseDistance * 2.1;
 			if( dotSize < this.inactiveDisplay ) {
 				dotSize = this.inactiveDisplay;
 			} else if ( dotSize > this.activeDisplay ) {
@@ -175,18 +190,6 @@ var testimonials = [
 		"../images/jpeg.jpg",
 		{'screenHeight': automation.defaultSize.x} ),
 ];
-$( document ).ready(function() {
-	mapImg.onload = function() {
-		baseTime = new Date().getTime();
-		
-		automation.toolTip = document.getElementById( 'canvasTooltip' );
-		automation.updateNextChange();
-		
-		automation.displayNumber( 0, testimonials[ 0 ] ); // start first
-		
-		animate();
-	};
-});
 
 function distance( v1, v2 ) {
 	return Math.sqrt( Math.pow( (v1.x - v2.x), 2) + Math.pow( (v1.y - v2.y), 2) );
