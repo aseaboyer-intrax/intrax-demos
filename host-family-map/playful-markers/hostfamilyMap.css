@@ -1,0 +1,68 @@
+body { font-family:'Open Sans', sans-serif;margin:0;padding:0; }
+
+#canvasWrapper {
+	position:relative;
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+#canvas {
+	background-color:#fff;
+	width:70%;
+}
+
+#canvasTooltip {
+	border-bottom:2px solid #666;
+	position:absolute;
+	right:50px;
+	top:40px;
+	width:250px;
+	
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	
+	display:-ms-flex;
+	display:-webkit-flex;
+	display:flex;
+	-ms-flex-direction:row;
+	-webkit-flex-direction:row;
+	flex-direction:row;
+	-ms-flex-wrap:wrap;
+	-webkit-flex-wrap:wrap;
+	flex-wrap:wrap;
+	justify-content:space-between;
+}
+
+.map-testimonial-image {
+	border-radius:50%;
+	display:block;
+	height:150px;
+	margin:0 auto;
+	width:150px;
+}
+
+
+@media (max-width:800px) {
+	#canvas {
+		width:100%;
+	}
+	
+	#canvasTooltip {
+		border-width:0;
+		left:5%;
+		top:100%;
+		width:90%;
+	}
+	#canvasTooltip>img {
+		margin:0;
+		max-width:30;
+	}
+	#canvasTooltip>div {
+		width:60%;
+	}
+}
+
+@font-face { font-family: 'milocomp'; src: url('fonts/MiloWeb.eot'); src: url('fonts/MiloWeb.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb.woff') format('woff'), url('fonts/MiloComp.ttf') format('truetype'), url('fonts/MiloComp.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
+
+@font-face { font-family: 'milobold'; src: url('fonts/MiloWeb-Bold.eot'); src: url('fonts/MiloWeb-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/MiloWeb-Bold.woff') format('woff'), url('fonts/MiloComp-Bold.ttf') format('truetype'), url('fonts/MiloComp-Bold.ttf.svg') format('svg'); font-weight: normal; font-style: normal; }
