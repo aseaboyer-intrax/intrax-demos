@@ -15,7 +15,7 @@ canv.addEventListener( 'mousemove', function( e ) {
 	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
 	
 }, false);
-canv.addEventListener( 'tap', function( e ) {
+canv.addEventListener( 'touchstart', function( e ) {
 	alert( "test: " + e.type );
 	document.body.style.background = "#666666";
 	automation.mobile = true
