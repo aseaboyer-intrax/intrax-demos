@@ -15,10 +15,11 @@ canv.addEventListener( 'mousemove', function( e ) {
 	automation.mouse.y = offSize * (e.y - jQuery( canvas ).offset().top); // respects resize value
 	
 }, false);
+
+// check for mobile/touch case
 canv.addEventListener( 'touchstart', function( e ) {
-	alert( "test: " + e.type );
-	document.body.style.background = "#666666";
-	automation.mobile = true
+	alert( "test #2" );
+	automation.mobile = true;
 }, false);
 
 function Testimonial( n, x, y, t, newImage, options ) {
@@ -47,10 +48,18 @@ function Testimonial( n, x, y, t, newImage, options ) {
 			var grd;
 			
 			var dotSize = canvas.width / this.mouseDistance * 2.1;
-			if( dotSize < this.inactiveDisplay ) {
-				dotSize = this.inactiveDisplay;
-			} else if ( dotSize > this.activeDisplay ) {
-				dotSize = this.activeDisplay;
+			if( !automation.mobile ) { 
+				if( dotSize < this.inactiveDisplay ) {
+					dotSize = this.inactiveDisplay;
+				} else if ( dotSize > this.activeDisplay ) {
+					dotSize = this.activeDisplay;
+				}
+			} else { // handle mobile case
+				if( this.active ) {
+					dotSize = this.activeDisplay;
+				} else {
+					dotSize = this.inactiveDisplay;
+				}
 			}
 			
 			context.beginPath();
