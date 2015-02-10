@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Multiselect dropdown mockup</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+	body { font-family:'Open Sans', sans-serif; margin:0; padding:0 }
+	
+	#edit-field-primary-language-tax-tid-wrapper {
+		margin:100px auto;
+		width:200px;
+	}
+	label[for='edit-field-primary-language-tax-tid'] {
+		background-color:#789;
+		display:block;
+		padding:5px;
+		-moz-user-select:none;
+		-webkit-user-select:none;
+		-ms-user-select:none;
+	}
+	label[for='edit-field-primary-language-tax-tid']:hover {
+		background-color:#bcd;
+	}
+	select#edit-field-primary-language-tax-tid {
+		border-width:0;
+		height:0;
+		margin:0;
+		padding:0;
+		position:absolute;
+		width:200px;
+	}
+	div:hover select#edit-field-primary-language-tax-tid,
+	.click select#edit-field-primary-language-tax-tid {
+		border-width:1px;
+		height:auto;
+	}
+</style>
+</head>
+<body>
+
+<div id="edit-field-primary-language-tax-tid-wrapper" class="views-exposed-widget views-widget-filter-field_primary_language_tax_tid">
+	<label for="edit-field-primary-language-tax-tid">Language:</label>
+	<div class="views-widget">
+		<div class="form-item form-type-select form-item-field-primary-language-tax-tid">
+		<select multiple="multiple" name="field_primary_language_tax_tid[]" id="edit-field-primary-language-tax-tid" size="9" class="form-select">
+			<option value="117">Afrikaans</option><option value="126">Arabic</option><option value="118">Chinese (Cantonese)</option><option value="112">Chinese (Mandarin)</option><option value="93">Czech</option><option value="95">Danish</option><option value="106">English</option><option value="87">French</option><option value="77">German</option><option value="122">Icelandic</option><option value="76">Italian</option><option value="109">Japanese</option><option value="101">Korean</option><option value="124">Norwegian</option><option value="116">Persian</option><option value="85">Polish</option><option value="72">Portuguese</option><option value="103">Serbian</option><option value="97">Slovak</option><option value="74">Spanish</option><option value="99">Swedish</option><option value="83">Thai</option><option value="79">Turkish</option>
+		</select>
+		</div>
+	</div>
+</div>
+
+<script src="jquery-2.1.1.min.js"></script>
+<script>
+jQuery( document ).ready(function() {
+	
+	// do a foreach select[multiple="multiple"] to enable all of this later
+	jQuery( "select[multiple='multiple']" ).each( function ( e ) {
+		var labelSibling = jQuery( this ).closest( ".views-exposed-widget" ).children( "label" );
+		jQuery( this ).data( "defaultText", jQuery( labelSibling ).text( ) );
+		//jQuery( labelSibling ).data( "defaultText", jQuery( labelSibling ).text( ) );
+		//console.log( jQuery( labelSibling ).data( "defaultText") );
+		
+	});
+	
+	jQuery( "#edit-field-primary-language-tax-tid-wrapper label" ).click( function() {
+		jQuery( this ).closest( ".views-exposed-widget" ).toggleClass( "click" );
+	});
+	jQuery( "#edit-field-primary-language-tax-tid-wrapper label" ).hover(
+		function() {
+			jQuery( this ).closest( ".views-exposed-widget" ).addClass( "hover" );
+		}, function() {
+			jQuery( this ).closest( ".views-exposed-widget" ).removeClass( "hover" );
+		}
+	);
+	
+	jQuery( "select[multiple='multiple']" ).change(function( e ) {
+		var values = jQuery( this ).val();
+		var thisObj = jQuery( this );
+		var valueList = '';
+	//	console.log(  );
+		jQuery( this ).children(":selected").each( function ( k, v) {
+			if( valueList != '' ) { valueList += ", "; }
+			valueList += this.text;
+		});
+		jQuery( this ).closest( ".views-exposed-widget" ).children( "label" ).text( ( jQuery( this ).data( "defaultText") + " " + valueList ) );
+	});
+});
+</script>
+</body>
+</html>

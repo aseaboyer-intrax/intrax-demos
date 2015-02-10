@@ -3,8 +3,6 @@ var c;
 var mapImg = new Image();
 $( document ).ready(function() {
 	canv = document.getElementById( "canv" );
-	console.log( 'canv' );
-	console.log( canv );
 	c    = canv.getContext( "2d" );
 	mapImg.src = 'mockup_HF_map_statelines-cropped_v3.png';
 	//c.font = "18px milobold";
@@ -20,7 +18,8 @@ $( document ).ready(function() {
 		
 		animate();
 	};
-	
+	/*
+	// old method of calculating mouse position
 	canv.addEventListener( 'mousemove', function( e ) {
 		var offSize = 1;
 		offSize = canv.width / parseFloat( jQuery( canv ).css( 'width' ) );
@@ -28,11 +27,24 @@ $( document ).ready(function() {
 		automation.mouse.x = offSize * (e.x - jQuery( canv ).offset().left); // update mouse location
 		automation.mouse.y = offSize * (e.y - jQuery( canv ).offset().top); // respects resize value
 		
-		// delay animation
-		
+	}, false);
+	*/
+	canv.addEventListener( 'mousemove', function( e ) {
+		// info: http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
+		var mousePos = getMousePos( canv, e );
+		console.log( mousePos );
+		automation.mouse = mousePos;
 	}, false);
 });
 
+function getMousePos(canvas, evt) {
+	var rect = canvas.getBoundingClientRect();
+	return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+	};
+}
+	  
 function Testimonial( n, x, y, t, newImage, options ) {
 	var und;
 	var displayAbove = false;
@@ -221,14 +233,14 @@ function animate() {
 	 *	*** DRAW ***
 	 */
 	
-	/*
+	/**/
 	// debug mouse position
 	c.beginPath();
 	c.arc( automation.mouse.x, automation.mouse.y, 10, 0, 2 * Math.PI, false );
 	c.closePath();
 	c.fillStyle = "#791234";
 	c.fill();
-	*/
+	
 	
 	var activeT = 0;
 	for( x = 0; x < testimonials.length; x++ ) { // draw testimonials

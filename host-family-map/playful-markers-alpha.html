@@ -89,6 +89,7 @@
 	var c    = canv.getContext( "2d" );
 	var mapImg = new Image();
 	mapImg.src = 'mockup_HF_map_statelines-cropped_v3.png';
+	var img = new Image();
 	c.font = "18px milobold";
 	c.textAlign = 'center';
 	
@@ -284,7 +285,10 @@
 		/*
 		 *	*** UPDATE ***
 		 */
+		c.save();
+		c.globalAlpha = 0.4;
 		c.drawImage( mapImg, 0, 0, canv.width, canv.height ); //draw map
+		c.restore();
 		
 		for( x = 0; x < testimonials.length; x++ ) {
 			var t = testimonials[x];
