@@ -11,6 +11,12 @@
 		position:absolute;
 		top:0;
 	}
+	p span {
+		background-image:url( "images/icon-red-x-circle-small.gif" );
+		background-repeat:no-repeat;
+		margin:0 0 0 10px;
+		padding:0 0 0 20px;
+	}
 	
 	#edit-field-primary-language-tax-tid-wrapper {
 		margin:100px auto;
@@ -85,12 +91,23 @@ jQuery( document ).ready(function() {
 		var thisObj = jQuery( this );
 		var valueList = '';
 	//	console.log(  );
+		var caddie = jQuery( "p" );
+		caddie.text( jQuery( this ).data( "defaultText" ) + " " );
 		jQuery( this ).children(":selected").each( function ( k, v) {
-			if( valueList != '' ) { valueList += ", "; }
-			valueList += this.text;
+			var t = this.text;
+			var v = this.value;
+			jQuery('<span/>', {
+				id: 'test-' + v,
+				text: t
+			}).click(
+				function() {
+					console.log( "Remove " + t + " " + v );
+					jQuery("select option[value='" + v + "']").removeAttr("selected");
+					jQuery( this ).remove();
+			}).appendTo( "p" );
+			//valueList += jQuery( "span" ).addClass( "deselect" ).text( this.text );
 		});
-		jQuery( this ).closest( ".views-exposed-widget" ).children( "label" ).text( ( jQuery( this ).data( "defaultText") + " " + valueList ) );
-		jQuery( "p" ).text( ( jQuery( this ).data( "defaultText") + " " + valueList ) );
+		//jQuery( "p" ).text( ( jQuery( this ).data( "defaultText") + " " + valueList ) );
 	});
 });
 </script>
