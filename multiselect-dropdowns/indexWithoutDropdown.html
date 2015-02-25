@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Multiselect dropdown mockup</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='css/select2.min.css' rel='stylesheet' type='text/css'>
+<link href='css/prettify.css' rel='stylesheet' type='text/css'>
+<style>
+	body { font-family:'Open Sans', sans-serif; margin:0; padding:0 }
+	#edit-field-primary-language-tax-tid-wrapper {
+		margin:100px auto;
+		width:300px;
+	}
+	#edit-field-primary-language-tax-tid-wrapper .select2-container {
+		width:100% !important;
+	}
+	select {
+		width:200px;
+	}
+	option {
+		padding-left:20px;
+		transition:padding 100ms;
+		width:100%;
+	}
+	option:active, option:checked {
+		padding-left:10px !important;
+	}
+</style>
+</head>
+<body>
+
+<div id="edit-field-primary-language-tax-tid-wrapper" class="views-exposed-widget views-widget-filter-field_primary_language_tax_tid">
+	<label for="edit-field-primary-language-tax-tid">Language:</label>
+	<div class="views-widget">
+		<div class="form-item form-type-select form-item-field-primary-language-tax-tid">
+		<select multiple="multiple" name="field_primary_language_tax_tid[]" id="edit-field-primary-language-tax-tid" size="9" class="form-select">
+			<option value="117">Afrikaans</option><option value="126">Arabic</option><option value="118">Chinese (Cantonese)</option><option value="112">Chinese (Mandarin)</option><option value="93">Czech</option><option value="95">Danish</option><option value="106">English</option><option value="87">French</option><option value="77">German</option><option value="122">Icelandic</option><option value="76">Italian</option><option value="109">Japanese</option><option value="101">Korean</option><option value="124">Norwegian</option><option value="116">Persian</option><option value="85">Polish</option><option value="72">Portuguese</option><option value="103">Serbian</option><option value="97">Slovak</option><option value="74">Spanish</option><option value="99">Swedish</option><option value="83">Thai</option><option value="79">Turkish</option>
+		</select>
+		</div>
+	</div>
+</div>
+
+<script src="jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/select2.full.js"></script>
+<script>
+jQuery( document ).ready(function() {
+	//jQuery("#edit-field-primary-language-tax-tid-wrapper select").select2();
+});
+</script>
+</body>
+</html>
