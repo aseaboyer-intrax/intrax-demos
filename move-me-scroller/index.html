@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Move Me - Auto Scroller Demo</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+<script src="jquery-2.1.1.min.js"></script>
+<script>
+	function kv ( key, val ) {
+		return { 'key': key, 'val': val }
+	}
+	
+	var moveMeScroller = {
+		'topOffset': 50,
+		'scrollSpeed': 1000,
+		'lookups': [
+			kv( 'everyones-a-hero', '#item1' ),
+			kv( 'turns-out', '#item2' ),
+			kv( 'dont-strain-your-brain', '#item3' ),
+			kv( 'she-alone', '#item4' ),
+			kv( 'they-rampaged', '.class1' ),
+		],
+		operate: function ( url ) {
+			var splitURL = url.split("#");
+			if( splitURL.length > 1 ) {
+				var urlTail = splitURL[ splitURL.length -1 ];
+				
+				for( var x = 0; x<= this.lookups.length-1; x++ ) {
+						if( urlTail === this.lookups[x].key ) {
+							this.scrollMe( this.lookups[x].val );
+							x = this.lookups.length-1; // leave the loop
+						}
+				}
+				
+			} else {
+				console.log( 'Dont touch' );
+			}
+		},
+		scrollMe: function ( dest ) {
+			console.log( "Scroll to: " + dest );
+			jQuery('html,body').animate({
+				scrollTop: ( ( jQuery( dest ).offset().top - this.topOffset ) + 'px' )
+			}, this.scrollSpeed);
+		}
+	}
+	
+	jQuery( document ).ready(function() {
+		moveMeScroller.operate( document.URL );
+		
+		jQuery( "a" ).on( 'click', function() { // check for in page link changes
+			moveMeScroller.operate( this.href );
+		});
+	});
+</script>
+<style>
+	body {
+		font-family: 'Source Sans Pro', sans-serif;
+		margin:0;
+		padding:0;
+		position:relative;
+	}
+	
+	#header {
+		display:block;
+		left:0;
+		position:fixed;
+		right:0;
+		top:0;
+	}
+	#nav {
+		background-color:rgb(51, 51, 51);
+		box-shadow:0 3px 0px rgba(0,0,0,.6);
+		color:rgb(256, 256, 256);
+		list-style:none;
+		margin:0 auto;
+		max-width:740px;
+		padding:10px 20px;
+	}
+	#nav>li {
+		display:inline-block;
+		margin-right:10px;
+	}
+	#nav>li a {
+		color:#fff;
+	}
+	#nav>li a:hover {
+		color:#ccc;
+	}
+	
+	#copy {
+		display:block;
+		margin:0 auto;
+		max-width:740px;
+		padding:40px 0 10px;
+	}
+</style>
+</head>
+<body>
+
+<div id="header">
+	<ul id="nav">
+		<li><b>Jump: </b></li>
+		<li><a href="#everyones-a-hero">Everyone's a hero</a></li>
+		<li><a href="#turns-out">Turns out</a></li>
+		<li><a href="#dont-strain-your-brain">Don't strain your brain</a></li>
+		<li><a href="#she-alone">She alone</a></li>
+		<li><a href="#they-rampaged">They rampaged (class)</a></li>
+	</ul>
+</div>
+
+<div id="copy">
+	<!-- start whedon ipsum -->
+	<p>I would appreciate it if one person on this boat would not assume I'm an evil, lecherous hump. Let me pour you a big frosty mug of 'shut-the-hell-up.' We'll have to call it early quantum state phenomenon. Only way to fit 5000 species of mammal on the same boat. Start with the part where Jayne gets knocked out by a ninety-pound girl, 'cause I don't think that's ever getting old. So, she's added cussing and hurling about of things to her repertoire. </p>
+	<p>Better to cut you down to size, grandma. Yeah, well, I'm not the one who wanted Wind Beneath My Wings for the first dance. It was the pioneer days; people had to make their own interrogation rooms. Out of cornmeal. It's not a road trip. It's a covert operation. The gentlemen are coming by. In every generation there is a chosen one. </p>
+	<p>I've seen the best and the worst of you. Buffy's boinking Spike. </p>
+	<p>I figure, if I'm responsible for the end of the world, I get to name it. I am never gonna see a merman, ever. Time is what turns kittens into cats. We need to save Buffy from Hansel and Gretel. I swallowed a bug. I'm a comfortador also. You're gonna die screaming but you won't be heard. And zombies don't eat brains anyway, unless instructed to by their zombie master. Okay, at this point you're abusing sarcasm. </p>
+	<p id="item1">Everyone's a hero in their own way, in their own not that heroic way. I dislike that Anya. She's newly human and strangely literal. </p>
+	<p>Since when do they have orgies, and why aren't I on the mailing list? Stay with me. Forever. That's the whole point. The good guys are always stalwart and true, the bad guys are easily distinguished by their pointy horns or black hats, and, uh, we always defeat them and save the day. No one ever dies, and everybody lives happily ever after. Men, with your sales. They're just a bunch of hormonal time bombs. This distress call wouldn't be taking place in someone's pants, would it? Shh! No programs, don't use that word. Just be Buffy. Once again I teeter at the precipice of the generational gap. You're really campaigning for bitch-of-the-year, aren't you? </p>
+	<p>You're the Slayer, and we're, like, the Slayerettes! Say Skywalker, and I smack ya. You're gonna die screaming but you won't be heard. Yeah, well, I'm not the one who wanted Wind Beneath My Wings for the first dance. How did your brain even learn human speech? I'm just so curious. </p>
+	<p>Frankly, it's ludicrous to have these interlocking bodies and not...interlock. Start with the part where Jayne gets knocked out by a ninety-pound girl, 'cause I don't think that's ever getting old. And I understand with perfect clarity exactly what you are. The human mind is like Van Halen; if you just pull out one piece and keep replacing it, it just degenerates. We don't have wings, we just skate around with perfect hair fighting crime. I am obsolete. This must be what old people feel like, and Blockbuster. Men, with your sales. It's about women. </p>
+	<p>What did I say to you about barging into my shuttle? The human body can be drained of blood in 8.6 seconds given adequate vacuuming systems. We're outlaws with hearts of gold. The news isn't there to tell you what happened. It's there to tell you what it wants you to hear or what it thinks you want to hear. We're pimps and killers, but in a philanthropic way. Easy as really difficult pie. My Uncle Rory was the stodgiest taxidermist you've ever met by day. Don't care much for fancy parties. Too rough. I'm a rogue demon hunter now. </p>
+	<p>It was like the Heimlich, with stripes! I'll never leave. Not even if you kill me. </p>
+	<p>Say, aren't you leaving a hole in the middle of some soggy group hug? Magic's all balderdash and chicanery. You can't take the sky from me. What do they need such good eyesight for anyway? </p>
+	<p>Uh, thermal exhaust port's above the main port, numbnuts. She came from the grave much graver. If you say 'adorabubble,' I'm leaving. Well, I'm sure I'm in serious need of some moral spankitude, but guess who's not qualified to be my Rabbi? You remember, you fail math, you flunk out of school, you end up being the guy at the pizza place that sweeps the floor and says, 'Hey, kids, where's the cool parties this weekend?' Ah, the pitter patter of tiny feet in huge combat boots. You're really campaigning for bitch-of-the-year, aren't you? </p>
+	<p class="class1">They rampaged through half the known world until Angel got his soul. It's getting eerie, what's this cheery singing all about? Welcome to the nancy tribe. </p>
+	<p>It's my estimation that every man ever got a statue made of him was one kind of sommbitch or another. You can't open the book of my life and jump in the middle. Well we could grind our enemies into talcum powder with a sledgehammer but, gosh, we did that last night. One of my personalities happens to be a multiple personality, but that doesn't make me a multiple personality. From beneath you, it devours. And what's with all the carrots? Yeah, it was sexy the way she touched me real hard with her fists. I've seen the best and the worst of you. I find it a bit sad that you think of yourself as a candidate for anyone's fantasy. Every single person down there is ignoring your pain because they're too busy with their own. </p>
+	<p>I recognize the council has made a decision, but given that it's a stupid-ass decision, I've elected to ignore it. These are stone killers, little man. They ain't cuddly like me. And I understand with perfect clarity exactly what you are. I've got four brothers, none of them Democrats. Barmaid, bring me stronger ale, and some plump, succulent babies to eat. I told him that I loved him, I kissed him, and I killed him. It's like somebody slaughtered an Abercrombie and Fitch catalog. </p>
+	<p id="item2">Turns out I suddenly find myself needing to know the plural of apocalypse. It eats you, starting with your bottom. </p>
+	<p>My Uncle Rory was the stodgiest taxidermist you've ever met by day. Any self-respecting demon should be living in a pit of filth or a nice crypt. I figure, if I'm responsible for the end of the world, I get to name it. </p>
+	<p>The human mind is like Van Halen; if you just pull out one piece and keep replacing it, it just degenerates. These endless days are finally ending in a blaze. Risk the pain, it is your nature. The only time you were ever at peace in your whole life was when you were dead. Passion rules us all. And you know the monkey's just,'I mock you with my monkey pants!' </p>
+	<p>Any self-respecting demon should be living in a pit of filth or a nice crypt. Yeah, it was sexy the way she touched me real hard with her fists. Don't strain your brain trying, then. Might break something. Men watch the action movie, they eat of the beef, and enjoy to look at the bosoms. Or even worse, a sneezure. You're gonna die screaming but you won't be heard. Recognizing someone else's power does not diminish your own. </p>
+	<p>Can't call to mom, can't say a word. I love what you are, what you do, how you try. It eats you, starting with your bottom. Okay, uh, I'm lost. I'm angry. And I'm armed. It's like somebody slaughtered an Abercrombie and Fitch catalog. They're a little bit bison. You sanguine about the kind of reception we're apt to receive on an Alliance ship, Cap'n? Turns out I suddenly find myself needing to know the plural of apocalypse. What gives you the right to suck face with your demon lover again? When I say, 'I love you,' it's not because I want you or because I can't have you. </p>
+	<p>I think calling him that is an insult to the psychotic lowlife community. How about 'cause you're a tiny impotent Nazi with a bug up his butt the size of an emu? And what's with all the carrots? In their resting state, our actives are as innocent and vulnerable as children. I was actually at Woodstock. That was a weird gig. I fed off a flower person, and then I spent the next six hours watching my hand move. I don't think Buffy's going to be too broken up over a pylon. </p>
+	<p>It's about women. Say, aren't you leaving a hole in the middle of some soggy group hug? </p>
+	<p>Turns out I suddenly find myself needing to know the plural of apocalypse. So I skipped intro to evil or whatever, but how is it that I get an F, when this guy that we're reading, Chauncey, can't even spell? I like to think of myself more as a 'guest-age'. </p>
+	<p>The lambs have passed through the gate. Welcome to the future, where cars fly, robots serve our every whim, and genetically engineered dinosaurs rule the Earth. You are talking crazy-person talk. Put your words in word places please. She's a truck-driving magic mama! </p>
+	<p>Well, I'm sure I'm in serious need of some moral spankitude, but guess who's not qualified to be my Rabbi? We will rule over all this land, and we will call it...This Land. I don't buckle. Occasionally I swashbuckle. It was supposed to confuse him, but it just made him peppy. I'm the one who brings about the thought-pocalypse. Well, a gathering is brie, mellow song stylings; shindig, dip, less mellow song stylings, perhaps a large amount of malt beverage; and hootenanny, well, it's chock full of hoot, just a little bit of nanny. </p>
+	<p>It has nothing to do with me. Anya! How is your money? Imagine Bonnie and Clyde if they had 150 years to get it right. I wanna hurt you, but I can't resist the sinister attraction of your cold and muscular body! </p>
+	<p id="item3">Don't strain your brain trying, then. Might break something. Special isn't always a good thing here, Boyd. </p>
+	<p>Bunnies! Bunnies! It must be Bunnies! Oh my god, I find lentils completely incomprehensible. I don't buckle. Occasionally I swashbuckle. Well we could grind our enemies into talcum powder with a sledgehammer but, gosh, we did that last night. Spike! It's Spike. And he's wearing a coat. You haven't seen my drawer of inappropriate starches? But I haven't spent any money! I was all... dead and frugal. I wanna hurt you, but I can't resist the sinister attraction of your cold and muscular body! Bonnie and Clyde, they wanted fame, notoriety, and boy did they get it. They also got dead. </p>
+	<p>I swallowed a bug. Everyone's a hero in their own way, in their own not that heroic way. Don't be ridiculous. Martha Stewart isn't a demon. She's a witch. Apocalypse, we've all been there; the same old trips, why should we care? A vampire in love with a Slayer. It's rather poetic, in a maudlin sort of way. We don't have wings, we just skate around with perfect hair fighting crime. Y'all see the man hanging out of the spaceship with the really big gun? </p>
+	<p>I'm the one who brings about the thought-pocalypse. You will keep a civil tongue in this house or we'll put your tongue in a stew. Time for some thrilling heroics. Big damn heroes, sir. </p>
+	<p>Bunnies aren't just cute like everybody supposes. You'll prove I can trust you when the day comes that you have to kill me. And you do. And you know the monkey's just,'I mock you with my monkey pants!' </p>
+	<p>It's getting eerie, what's this cheery singing all about? Stay with me. Forever. That's the whole point. </p>
+	<p>Occasionally, I'm callous and strange. Remember when you could just throw a girl in a volcano? But I haven't spent any money! I was all... dead and frugal. Okay, at this point you're abusing sarcasm. It's not a road trip. It's a covert operation. Eyeballs to entrails, my sweet. Apocalypse, we've all been there; the same old trips, why should we care? The brain is kept in a fear-induced, adrenaline-fueled overdrive state, like a problem you can't solve. </p>
+	<p>What gives you the right to suck face with your demon lover again? In their resting state, our actives are as innocent and vulnerable as children. Ah, the pitter patter of tiny feet in huge combat boots. Okay, at this point you're abusing sarcasm. </p>
+	<p>I think calling him that is an insult to the psychotic lowlife community. We're gonna explode? I don't wanna explode. My Uncle Rory was the stodgiest taxidermist you've ever met by day. I dislike that Anya. She's newly human and strangely literal. Uh, hey, I got a idea. Instead of us hanging around playing art critic 'til I get pinched by the man, how's about we move away from this eerie-ass piece of work, and get on with our increasingly eerie-ass day. How's that? You're really campaigning for bitch-of-the-year, aren't you? The lambs have passed through the gate. What gives you the right to suck face with your demon lover again? Planet's coming up a mite fast. </p>
+	<p>For this plan to work, River and I will have to be dead. These are stone killers, little man. They ain't cuddly like me. You could, uh, could have, like, a world without shrimp, or with, you know, nothing but shrimp. See if you were really a witch, you'd do a spell to escape. Anya! How is your money? Or even worse, a sneezure. I love what you are, what you do, how you try. I hate to bring up our imminent arrest during your crazy time, but we gotta move. Buffy's boinking Spike. </p>
+	<p>Oh my god, I find lentils completely incomprehensible. And you know the monkey's just,'I mock you with my monkey pants!' </p>
+	<p>Love keeps her in the air when she ought to fall down. For this plan to work, River and I will have to be dead. Yeah, well, I'm not the one who wanted Wind Beneath My Wings for the first dance. They're a little bit bison. </p>
+	<p id="item4">She alone will stand against the vampires the demons and the forces of darkness. I don't want to use the word genius, but I'd be ok if you wanted to. Well, I haven't been to a hell dimension just of late, but I do know a thing or two about torment. And zombies don't eat brains anyway, unless instructed to by their zombie master. You always hurt the one you love. Oh my god! Did it sing? </p>
+	<p>Uh, hey, I got a idea. Instead of us hanging around playing art critic 'til I get pinched by the man, how's about we move away from this eerie-ass piece of work, and get on with our increasingly eerie-ass day. How's that? Well we could grind our enemies into talcum powder with a sledgehammer but, gosh, we did that last night. Oh my god you will never believe what happened at school today. We're pimps and killers, but in a philanthropic way. It's not a road trip. It's a covert operation. She's a truck-driving magic mama! And what's with all the carrots? Stay away from hyena people, or any loser athletes, or if you see anyone who's invisible. Passion rules us all. These endless days are finally ending in a blaze. </p>
+	<p>Apocalypse, we've all been there; the same old trips, why should we care? Men, with your sales. So we'll integrate non-progressional evolution theory with God's creation of Eden. Uh, hey, I got a idea. Instead of us hanging around playing art critic 'til I get pinched by the man, how's about we move away from this eerie-ass piece of work, and get on with our increasingly eerie-ass day. How's that? </p>
+	<p>You remember, you fail math, you flunk out of school, you end up being the guy at the pizza place that sweeps the floor and says, 'Hey, kids, where's the cool parties this weekend?' Instead you go all Dumbledore on me. She alone will stand against the vampires the demons and the forces of darkness. Oh my god! Did it sing? These endless days are finally ending in a blaze. This may come as a shock, but I'm actually not very good at talking to girls. We'll have to call it early quantum state phenomenon. Only way to fit 5000 species of mammal on the same boat. The only thing Willow was ever good for, the only thing I ever had going for me were those moments, just moments, where Tara would look at me and I was wonderful. The good guys are always stalwart and true, the bad guys are easily distinguished by their pointy horns or black hats, and, uh, we always defeat them and save the day. No one ever dies, and everybody lives happily ever after. </p>
+	<!-- end whedon ipsum code -->
+</div>
+
+</body>
+</html>

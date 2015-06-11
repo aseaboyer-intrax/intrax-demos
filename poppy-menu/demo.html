@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Poppy drop downs</title>
+<style>
+.nice-menu-main-menu {
+	padding:0;
+}
+.nice-menu-main-menu:after {
+	content:'.';
+	clear:both;
+	color:transparent;
+}
+.nice-menu-main-menu>li:before {
+	transition:width 1000ms,height 1000ms,
+	-webkit-transform 1000ms,
+	-moz-transform 1000ms,
+	-ms-transform 1000ms,
+	-o-transform 1000ms,
+	transform 1000ms;
+	display:inline-block;
+	content: ".";
+	color:transparent;
+	position: relative;
+	top:0;
+	left:0;
+	height:32px;
+	width:0;
+	z-index: -1;
+	background: url('http://www.dev.globalinternships.com/sites/all/themes/intrax_global_internships/images/interface/down.png') 0 0 repeat;
+	background-repeat:no-repeat;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+.nice-menu-main-menu>li:hover:before {
+	height:32px;
+	width:32px;
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+.nice-menu-main-menu>li {
+	/*background-image:url('http://www.dev.globalinternships.com/sites/all/themes/intrax_global_internships/images/interface/down.png');
+	background-repeat:no-repeat;*/
+	display: block;
+	float: left;
+	padding:7px 0;
+	width: 250px;
+}
+.nice-menu-main-menu>li:hover span {
+	
+}
+.nice-menu-main-menu>li>ul {
+	display: none;
+	padding-left:60px;
+}
+.nice-menu-main-menu>li:hover>ul {
+	display: block;
+}
+
+.nice-menu-main-menu ul {
+	padding-left:20px;
+}
+</style>
+</head>
+<body>
+
+<div id="block-nice-menus-1" class="block block--nice-menus main-menu block--nice-menus-1">
+		<a id="block-nice_menus-1" name="block-nice_menus-1" class="anchor-link"> </a>
+		
+		
+				<div class="block__content">
+			<ul class="nice-menu nice-menu-down nice-menu-main-menu" id="nice-menu-1"><li class="menu-648 menuparent  menu-path-nolink active-trail first odd "><span title="" class="nolink">Internships</span><ul><li class="menu-606 menuparent  menu-path-nolink active-trail first odd "><span title="" class="nolink">View Categories</span><ul><li class="menu-642 menu-path-node-73 first odd "><a href="/internships/business-management" title="">Business</a></li>
+<li class="menu-607 menu-path-node-60 active-trail  even "><a href="/internships/information-media-communications" title="" class="active">Information Media &amp; Communications</a></li>
+<li class="menu-643 menu-path-node-74  odd "><a href="/internships/engineering" title="">Engineering</a></li>
+<li class="menu-644 menu-path-node-75  even "><a href="/internships/administration-law" title="">Public Administration &amp; Law</a></li>
+<li class="menu-646 menu-path-node-77  odd "><a href="/internships/hospitality-tourism" title="">Hospitality &amp; Tourism</a></li>
+<li class="menu-645 menu-path-node-76  even last"><a href="/internships/social-development" title="">Social Development</a></li>
+</ul></li>
+<li class="menu-661 menu-path-node-87  even "><a href="/search-internships" title="">Search All Positions</a></li>
+<li class="menu-662 menu-path-node-79  odd "><a href="/internships/details" title="">View Pricing &amp; Program Details</a></li>
+<li class="menu-667 menu-path-node-86  even "><a href="/j1visa-service" title="">Get J-1 Sponsorship</a></li>
+<li class="menu-668 menu-path-node-111  odd last"><a href="/engage" title="">Engage with Us</a></li>
+</ul></li>
+<li class="menu-538 menuparent  menu-path-nolink  even "><span title="" class="nolink">Destinations</span><ul><li class="menu-632 menu-path-node-63 first odd "><a href="/destinations/belize" title="">Belize</a></li>
+<li class="menu-635 menu-path-node-66  even "><a href="/destinations/germany" title="">Germany</a></li>
+<li class="menu-639 menu-path-node-70  odd "><a href="/destinations/spain" title="">Spain</a></li>
+<li class="menu-633 menu-path-node-64  even "><a href="/destinations/chile" title="">Chile</a></li>
+<li class="menu-636 menu-path-node-67  odd "><a href="/destinations/ghana" title="">Ghana</a></li>
+<li class="menu-640 menu-path-node-71  even "><a href="/destinations/uk" title="">United Kingdom</a></li>
+<li class="menu-608 menu-path-node-61  odd "><a href="/destinations/china" title="">China</a></li>
+<li class="menu-637 menu-path-node-68  even "><a href="/destinations/japan" title="">Japan</a></li>
+<li class="menu-641 menu-path-node-72  odd "><a href="/destinations/usa" title="">United States</a></li>
+<li class="menu-634 menu-path-node-65  even "><a href="/destinations/france" title="">France</a></li>
+<li class="menu-638 menu-path-node-69  odd last"><a href="/destinations/peru" title="">Peru</a></li>
+</ul></li>
+<li class="menu-609 menuparent  menu-path-nolink  odd "><span title="" class="nolink">For Universities</span><ul><li class="menu-656 menuparent  menu-path-node-82 first odd "><a href="/university-services/career-centers" title="">Career Development Advisors</a><ul><li class="menu-657 menu-path-node-82 first odd last"><a href="/university-services/career-centers" title="">Help students find internships abroad to leverage their careers.</a></li>
+</ul></li>
+<li class="menu-650 menuparent  menu-path-node-80  even "><a href="/university-services/faculty-groups" title="">Faculty-Led Programs</a><ul><li class="menu-651 menu-path-node-80 first odd last"><a href="/university-services/faculty-groups" title="">Short-term programs for your university and professional groups.</a></li>
+</ul></li>
+<li class="menu-658 menuparent  menu-path-node-83  odd "><a href="/university-services/international-offices" title="">Global Education Advisors</a><ul><li class="menu-659 menu-path-node-83 first odd last"><a href="/university-services/international-offices" title="">Place international experience at the forefront of higher education.</a></li>
+</ul></li>
+<li class="menu-652 menuparent  menu-path-node-81  even "><a href="/university-services/custom-groups" title="">Custom Internship Groups</a><ul><li class="menu-654 menu-path-node-81 first odd last"><a href="/university-services/custom-groups" title="">Customized internship groups tailored to your students' skills, interests, and specialties.</a></li>
+</ul></li>
+<li class="menu-660 menu-path-node-84  odd last"><a href="/university-services/faq" title="">Frequently Asked Questions</a></li>
+</ul></li>
+<li class="menu-610 menuparent  menu-path-nolink  even last"><span title="" class="nolink">Host an Intern</span><ul><li class="menu-665 menuparent  menu-path-node-85 first odd "><a href="/host-companies" title="">Hosting an Intern</a><ul><li class="menu-666 menu-path-node-85 first odd last"><a href="/host-companies" title="">Enrich your company's operation and culture by hosting one of our highly motivated candidates.</a></li>
+</ul></li>
+<li class="menu-778 menu-path-node-275  even last"><a href="/host-companies/faq" title="">Frequently Asked Questions</a></li>
+</ul></li>
+</ul>
+		</div><!--content_attributes-->
+
+</div>
+
+</body>
+</html>

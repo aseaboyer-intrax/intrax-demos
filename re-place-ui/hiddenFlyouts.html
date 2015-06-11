@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AJAX Test</title>
+<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+<style>
+	body: {
+		font-family:'Righteous', sans-serif;
+	}
+	
+	.RPUI-trigger {
+		color:#999;
+		margin:0 10px;
+		transition:border-radius 0.1s, color 0.1s, margin 0.1s, padding 0.1s
+	}
+	.RPUI-trigger:hover, .RPUI-trigger:focus {
+		border-radius:5px;
+		background-color:#333;
+		color:#eee;
+		margin:0;
+		padding:0 10px;
+	}
+	.RPUI-trigger span.closer {
+		display:none;
+		content: "x";
+		margin-left:10px;
+	}
+	.RPUI-trigger:hover span.closer {
+		display:inline;
+		content: "x";
+	}
+</style>
+<script src="jquery-2.1.1.min.js"></script>
+<script src="re-place-ui.js"></script>
+<script>
+	
+	jQuery( document ).ready(function() {
+	/*
+		var obj = { "language": '', "age": 'false'  };
+		getStorage( obj );
+		obj = readPassedVars( obj );// Need to check the url first!
+		setfields( obj );
+		jQuery( "#edit-language select" ).change(function( e ) {
+			obj = changeStorage( obj, 'language', e.currentTarget.value );
+			//console.log( obj );
+		});
+		jQuery( "#age-radio input" ).change(function( e ) {
+			obj = changeStorage( obj, 'age', e.currentTarget.value );
+			//console.log( obj );
+		});
+		jQuery( "#ajaxTest" ).click(function( e ) {
+			e.preventDefault();
+			
+			$.ajax({
+				url: "http://glassfish-prod1:8080/aupair-rs/auPairs/"
+			}).done(function() {
+				console.log( "AJAX PULL COMPLETE" );
+			});
+		});
+		*/
+	});
+</script>
+</head>
+<body>
+<div id="search-fields">
+
+	<select name="language" id="language-select" class="form-select">
+		<option value="All">All Languages</option>
+		<option value="Afrikaans">Afrikaans</option>
+		<option value="Algerian">Algerian</option>
+		<option value="Arabic">Arabic</option>
+		<option value="Basic Latin">Basic Latin</option>
+		<option value="Basque">Basque</option>
+		<option value="Bosnian">Bosnian</option>
+		<option value="Bulgarian">Bulgarian</option>
+		<option value="Cambodian">Cambodian</option>
+		<option value="Catalan">Catalan</option>
+		<option value="Chinese (Cantonese)">Chinese (Cantonese)</option>
+		<option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
+		<option value="Croatian">Croatian</option><option value="Czech">Czech</option><option value="Danish">Danish</option><option value="Dutch">Dutch</option><option value="English">English</option><option value="Euskera">Euskera</option><option value="French">French</option><option value="German">German</option><option value="Greek">Greek</option><option value="Hindi">Hindi</option><option value="Hungarian">Hungarian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Kabylian">Kabylian</option><option value="Korean">Korean</option><option value="Laotian">Laotian</option><option value="Latin">Latin</option><option value="Macedonian ">Macedonian </option><option value="Ndebele">Ndebele</option><option value="Norwegian">Norwegian</option><option value="Polish">Polish</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Serbian">Serbian</option><option value="Sign Language">Sign Language</option><option value="Slovak">Slovak</option><option value="Sotho">Sotho</option><option value="Spanish">Spanish</option><option value="Swedish">Swedish</option><option value="Thai">Thai</option><option value="Turkish">Turkish</option><option value="Vietnamese">Vietnamese</option><option value="Xhosa">Xhosa</option><option value="Zulu">Zulu</option>
+	</select>
+</div>
+</body>
+</html>

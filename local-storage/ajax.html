@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AJAX Test</title>
+<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+<style>
+	body { background-color:#ffedd7; font-family:'Righteous', sans-serif; margin:0; padding:0; }
+	div.test {
+		background-color:#826047;
+		color:#ffedd7;
+		padding:20px;
+	}
+@media (max-width:500px) {
+	div.test {
+		background-color:#fc7097;
+		font-weight:bold;
+	}
+}
+
+#search-fields {
+	background-color:#fc7097;
+	border:2px solid #f8cba1;
+	border-radius:5px;
+	margin:0 auto;
+	max-width:400px;
+	padding:10px;
+	position:relative;
+	top:-10px;
+}
+#search-fields p {
+	padding:0;
+	margin:0 0 5px 0;
+}
+
+</style>
+<script src="jquery-2.1.1.min.js"></script>
+<script src="jquery.loadTemplate-1.4.5.min.js"></script>
+<script>
+	function changeStorage( passed, name, value ) {
+		passed[ name ] = value;
+		window.localStorage.setItem( "stored-ap-query", JSON.stringify( passed ) );
+	/*	try {
+			if( history ) {
+				history.pushState('object', 'New Title', url);
+			} else if( window.history ) { 
+				window.history.pushState('object', 'New Title', url);
+			}
+		}
+		catch(err) {
+			console.log( "Unable to push to the history: " + err.message );
+		}	*/
+		spoofURL( passed );
+		
+		return passed;
+	}
+	
+	function getStorage( passed ) {
+		console.log( 'passed' );
+		console.log( passed );
+		var stored = JSON.parse( window.localStorage.getItem( "stored-ap-query" ) );
+		console.log( 'stored' );
+		console.log( stored );
+		if( stored != null ) {
+			if( stored.age != null ) {
+				passed.age = stored.age;
+			}
+			if( stored.language != null ) {
+				passed.language = stored.language;
+			}
+		}
+		return stored;
+	}
+	
+	function setfields( saved ) {
+		//console.log( saved );
+		if( saved.language != '' ) {
+			jQuery( '#edit-language select' ).val( saved.language );
+		}
+		var useAge = false;
+		if( saved.age != null ) { useAge = saved.age; }
+		jQuery( "input.age-radio[value='" + saved.age + "']" ).prop('checked',true);
+	}
+	
+	function spoofURL ( data ) {
+		console.log( "spoof" );
+		console.log( data );
+		var buildUrl = '';
+		var strungTitle = "Searching for: ";
+		jQuery.each( data, function( key, val ) {
+			console.log( "Trying to spoof in " + key + " -- " + val )
+			if( (key == 'age' || key == 'language') && val != '' ) {
+				if( buildUrl != '' ) { buildUrl += '&';}
+				buildUrl += key + '=' + encodeURIComponent(val);
+			}
+		});
+		if( data.language != '' ) {
+			strungTitle += data.language + ' speaking';
+		}
+		strungTitle += ' au pairs';
+		if( data.age ) {
+			strungTitle += ' who can watch children under two';
+		}
+		window.history.pushState( data, strungTitle, '#!' + buildUrl );
+		document.title = strungTitle;
+		//console.log( "send user to: " + strungTitle );
+	}
+	
+	function readPassedVars ( stored ) {
+		var listed = window.location.href.split( '#!' );
+		var cleanListed = '';
+		if( listed.length > 0 ) {
+			cleanListed = decodeURIComponent( listed[ listed.length - 1 ] ).split( '&' );
+			console.log( 'part out vars: ' );
+			console.log( cleanListed );
+			//console.log( cleanListed.length );
+			jQuery.each( cleanListed, function( key, val ) {
+				var parts = val.split( '=' );
+				if( ( parts[0] == 'age' || parts[0] == 'language' ) && val != '' ) {
+					stored[ parts[0] ] = parts[1];
+				}
+			});
+		}
+		console.log( stored)
+		return stored;	// we are going to fill in the stored object and return it
+	}
+	
+	jQuery( document ).ready(function() {
+		var obj = { "language": '', "age": 'false'  };
+		getStorage( obj );
+		obj = readPassedVars( obj );// Need to check the url first!
+		setfields( obj );
+		jQuery( "#edit-language select" ).change(function( e ) {
+			obj = changeStorage( obj, 'language', e.currentTarget.value );
+			//console.log( obj );
+		});
+		jQuery( "#age-radio input" ).change(function( e ) {
+			obj = changeStorage( obj, 'age', e.currentTarget.value );
+			//console.log( obj );
+		});
+		jQuery( "#ajaxTest" ).click(function( e ) {
+			e.preventDefault();
+			
+			$.ajax({
+				url: "http://glassfish-prod1:8080/aupair-rs/auPairs/"
+			}).done(function() {
+				console.log( "AJAX PULL COMPLETE" );
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<div class="test">Testing Local Storage</div>
+<div id="search-fields">
+<!--
+	<p><label id="edit-language">Language:
+		<select name="language" class="form-select">
+			<option value="All">All Languages</option><option value="Afrikaans">Afrikaans</option><option value="Algerian">Algerian</option><option value="Arabic">Arabic</option><option value="Basic Latin">Basic Latin</option><option value="Basque">Basque</option><option value="Bosnian">Bosnian</option><option value="Bulgarian">Bulgarian</option><option value="Cambodian">Cambodian</option><option value="Catalan">Catalan</option><option value="Chinese (Cantonese)">Chinese (Cantonese)</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Croatian">Croatian</option><option value="Czech">Czech</option><option value="Danish">Danish</option><option value="Dutch">Dutch</option><option value="English">English</option><option value="Euskera">Euskera</option><option value="French">French</option><option value="German">German</option><option value="Greek">Greek</option><option value="Hindi">Hindi</option><option value="Hungarian">Hungarian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Kabylian">Kabylian</option><option value="Korean">Korean</option><option value="Laotian">Laotian</option><option value="Latin">Latin</option><option value="Macedonian ">Macedonian </option><option value="Ndebele">Ndebele</option><option value="Norwegian">Norwegian</option><option value="Polish">Polish</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Serbian">Serbian</option><option value="Sign Language">Sign Language</option><option value="Slovak">Slovak</option><option value="Sotho">Sotho</option><option value="Spanish">Spanish</option><option value="Swedish">Swedish</option><option value="Thai">Thai</option><option value="Turkish">Turkish</option><option value="Vietnamese">Vietnamese</option><option value="Xhosa">Xhosa</option><option value="Zulu">Zulu</option>
+		</select></label>
+	</p>
+	
+	<p><label id="age-radio">Do you have children under 2 yrs?<br />
+		<input type="radio" id="edit-undertwo-false" name="undertwo" value="false" class="age-radio"> No
+		<input type="radio" id="edit-undertwo-true" name="undertwo" value="true" class="age-radio"> Yes
+	</label></p>
+-->	
+	<p><a href='#' id="ajaxTest">Test Ajax</a></p>
+</div>
+</body>
+</html>

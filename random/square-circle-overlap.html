@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Square/Circle placement</title>
+<style>
+	body { margin:0;padding:10px;}
+	#canvas {
+		background-color:#ccc;
+	}
+</style>
+</head>
+<body>
+
+<canvas id="canvas" width="700" height="700" />
+
+<script>
+	var canv = document.getElementById( "canvas" );
+	var c    = canv.getContext( "2d" );
+	drawCircleSquare( c, 380,132,70, 200,200,200,100 );
+
+	function drawRect( ctx, x, y, h, w ) {
+		ctx.fillStyle = "#FF0000";
+		ctx.fillRect( x, y, h, w );
+	}
+
+	function drawCircle( ctx, centerX, centerY, radius ) {
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+		ctx.fillStyle = 'green';
+		ctx.fill();
+
+		drawPoint( ctx, centerX, centerY );
+	}
+
+	function drawLine ( ctx, startX, startY, endX, endY ) {
+		ctx.beginPath();
+		ctx.moveTo(startX, startY);
+		ctx.lineTo(endX, endY);
+		ctx.stroke();
+	}
+	function drawPoint ( ctx, centerX, centerY) {
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI, false);
+		ctx.fillStyle = 'aqua';
+		ctx.fill();
+	}
+
+	function connectCenterToCorners ( ctx, centerX, centerY, x, y, h, w, r ) {
+		ctx.strokeStyle="#ffffff";
+		drawLine( ctx, centerX, centerY, x, y );
+			drawPoint( ctx, x, y );
+		drawLine( ctx, centerX, centerY, x, y + w );
+			drawPoint( ctx, x, y + w );
+		drawLine( ctx, centerX, centerY, x + h, y );
+			drawPoint( ctx, x + h, y );
+		drawLine( ctx, centerX, centerY, x + h, y + w );
+			drawPoint( ctx, x + h, y + w );
+
+		// Instead of sending the corners, we need the lerped distance along the circle radius
+		// if these points are within the bounds of the square, it's a hit!
+
+	}
+
+	function drawCircleSquare ( ctx, centerX, centerY, radius, x, y, h, w ) {
+		drawRect( ctx, x, y, h, w );
+		drawCircle( ctx, centerX, centerY, radius );
+		connectCenterToCorners ( ctx, centerX, centerY, x, y, h, w, radius );
+	}
+
+	function lineDist (x, y, x0, y0){
+		return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+	}
+</script>
+
+</body>
+</html>
