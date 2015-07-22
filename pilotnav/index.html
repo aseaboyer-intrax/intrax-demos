@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pilot Nav Demo</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<script>
+document.addEventListener( 'DOMContentLoaded', function() {
+	var menuToggle = document.getElementById( "nav-list-toggle" );
+	menuToggle.addEventListener( "click", function(e) {
+		document.getElementById( "nav-list" ).classList.toggle("active");
+	});
+});
+</script>
+
+<style>
+	body { font-family: 'Open Sans', sans-serif;margin:0;padding:0; }
+	#contentWrapper, #headingWrapper nav {
+		margin:0 auto;
+		max-width:1200px;
+	}
+	#contentWrapper {
+	}
+	#headingWrapper {
+		background-color: #900;
+		color:#fff;
+		min-width:100%;
+		position:fixed;
+		top:0;
+	}
+	nav {
+		padding:20px;
+	}
+	
+	#nav-list-toggle {
+		display:block;
+		position:absolute;
+		top:20px;
+		right:20px;
+	}
+	#nav-list-toggle:hover {
+		cursor:pointer;
+		text-decoration:underline;
+	}
+	#nav-list .nav-list-item {
+		display:none;
+		text-align:right;
+	}
+	#nav-list.active .nav-list-item {
+		display:block;
+	}
+	
+	#logo>img {
+		height:27px;
+		width:240px;
+	}
+	
+@media (min-width:666px) {
+	nav {
+		background-color: #090;
+		display:flex;
+		display:-webkit-flex;
+		justify-content:space-between;
+	}
+	
+	#nav-list-toggle {
+		display:none;
+	}
+	
+	#nav-list .nav-list-item {
+		display:inline;
+		margin-left:40px;
+	}
+}
+</style>
+</head>
+<body>
+<div id="contentWrapper">
+	<div class="test">
+	Test Div
+	</div>
+</div>
+
+<div id="headingWrapper">
+	<nav>
+		<div id="logo"><img src="ts_logo_white.png"></div>
+		<div id="nav-list-toggle">Menu</div>
+		<div id="nav-list">
+			<a href="#/profile" class="nav-list-item">My Profile</a>
+			<a href="#/jobs" class="nav-list-item">My Jobs</a>
+			<a href="#/account" class="nav-list-item">Account Settings</a>
+			<a href="#/logout" class="nav-list-item">Logout</a>
+		</div>
+	</nav>
+</div>
+</body>
+</html>
