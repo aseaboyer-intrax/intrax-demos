@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	margin:0;
+	padding:0;
+}
+div {
+	background: -webkit-linear-gradient(30deg, red, blue, red ); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(30deg, red, blue, red ); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(30deg, red, blue, red ); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(30deg, red, blue, red ); /* Standard syntax (must be last) */
+	height:70%;
+	min-height:400px;
+	position:relative;
+}
+div::before {
+	background: -webkit-radial-gradient(60% 55%, closest-side,blue,green,yellow,transparent); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient(60% 55%, closest-side,#fff,transparent); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient(60% 55%, closest-side,#fff,transparent); /* For Firefox 3.6 to 15 */
+	background: radial-gradient(closest-side at 60% 55%,#fff,transparent); /* Standard syntax (must be last) */
+	content:'anything';
+	color:transparent;
+	height:70%;
+	min-height:400px;
+	position:absolute;
+	width:100%;
+	left:0;
+}
+div::after {
+	background: -webkit-radial-gradient(30% 40%, closest-side,blue,green,yellow,transparent); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient(30% 40%, closest-side,#fff,transparent); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient(30% 40%, closest-side,#fff,transparent); /* For Firefox 3.6 to 15 */
+	background: radial-gradient(closest-side at 30% 40%,#fff,transparent); /* Standard syntax (must be last) */
+	content:'anything';
+	color:transparent;
+	height:70%;
+	min-height:400px;
+	position:absolute;
+	width:100%;
+	left:0;
+}
+</style>
+</head>
+<body>
+
+<div style="color:white;text-align:center;">test</div>
+
+</body>
+</html>
